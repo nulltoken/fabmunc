@@ -138,17 +138,27 @@ namespace Fabmunc
 
         private void CreateRandomCommit()
         {
-            //TODO: To be randomized
-            const string commitMessage = "Another one hits the dust!";
-
             //TODO: Content of the commit to be randomized
             // - Drop files
             // - Create files (and subfolders)
             // - Alter existing files
 
-            _repository.Commit(commitMessage, Sign(), Sign(), new CommitOptions { AllowEmptyCommit = true });
+            _repository.Commit(SelectRandomFrom(CommitMessages), Sign(), Sign(), new CommitOptions { AllowEmptyCommit = true });
 
             _tracer.Write("Added one commit");
+        }
+
+        private ICollection<string> CommitMessages()
+        {
+            return new List<string>
+            {
+                "Another one hits the dust!",
+                "Monday",
+                "Fix weird-ish bug that happens sometimes",
+                "Arghhh!!!! Windows!!!!!",
+                "Nailed it!",
+                "Don't copy buffer in checkout unless needed",
+            };
         }
 
         private Branch CreateNewBranch(Random rand)
