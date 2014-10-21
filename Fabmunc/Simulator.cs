@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using LibGit2Sharp;
@@ -98,7 +99,7 @@ namespace Fabmunc
 
             if (next == 0)
             {
-                branch = PickRandomExistingBranch(rand);
+                branch = SelectRandomFrom(ExistingBranches);
             }
             else if (next == 1)
             {
@@ -169,12 +170,16 @@ namespace Fabmunc
             return configuredBranch;
         }
 
-        private Branch PickRandomExistingBranch(Random rand)
+        private T SelectRandomFrom<T>(Func<ICollection<T>> provider)
         {
-            var branches = _repository.Branches.ToList();
-            int whichOne = rand.Next(0, branches.Count);
+            ICollection<T> collection = provider();
+            int whichOne = _random.Next(0, collection.Count);
+            return collection.Skip(whichOne).Take(1).Single();
+        }
 
-            return branches[whichOne];
+        private ICollection<Branch> ExistingBranches()
+        {
+            return _repository.Branches.ToList();
         }
 
         public void Dispose()
