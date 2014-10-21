@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using LibGit2Sharp;
 
 namespace Fabmunc
@@ -88,7 +87,7 @@ namespace Fabmunc
 
         public void SimulateActivity()
         {
-                RunRandomAction(_random);
+            RunRandomAction(_random);
         }
 
         private void RunRandomAction(Random rand)
@@ -132,7 +131,7 @@ namespace Fabmunc
                 return;
             }
 
-            _repository.Network.Push(branch, new PushOptions{ CredentialsProvider = CredentialsProvider });
+            _repository.Network.Push(branch, new PushOptions { CredentialsProvider = CredentialsProvider });
             _tracer.Write("Pushed branch '{0}'", branch.Name);
         }
 
